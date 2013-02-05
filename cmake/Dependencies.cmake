@@ -49,13 +49,13 @@ set(Boost_ADDITIONAL_VERSIONS "1.47.0" "1.46.1" "1.46" "1.46.0" "1.45" "1.45.0" 
 set(LUXRAYS_BOOST_COMPONENTS thread filesystem system)
 find_package(Boost ${Boost_MINIMUM_VERSION} COMPONENTS ${LUXRAYS_BOOST_COMPONENTS})
 if (NOT Boost_FOUND)
-        # Try again with the other type of libs
-        if(Boost_USE_STATIC_LIBS)
-                set(Boost_USE_STATIC_LIBS)
-        else()
-                set(Boost_USE_STATIC_LIBS OFF)
-        endif()
-        find_package(Boost ${Boost_MINIMUM_VERSION} COMPONENTS ${LUXRAYS_BOOST_COMPONENTS})
+		# Try again with the other type of libs
+		if(Boost_USE_STATIC_LIBS)
+				set(Boost_USE_STATIC_LIBS)
+		else()
+				set(Boost_USE_STATIC_LIBS OFF)
+		endif()
+		find_package(Boost ${Boost_MINIMUM_VERSION} COMPONENTS ${LUXRAYS_BOOST_COMPONENTS})
 endif()
 
 if (Boost_FOUND)
