@@ -61,6 +61,55 @@ endif()
 if (Boost_FOUND)
 	include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 	link_directories(${Boost_LIBRARY_DIRS})
+
+	# File system library
+	find_library(BOOST_FILESYSTEM_LIB NAMES boost_filesystem-mt
+		HINTS ${BOOST_LIB_DIR}
+		PATHS
+			/usr/lib
+			/usr/local/lib
+			/opt/local/lib
+		)
+
+	# System library
+	find_library(BOOST_SYSTEM_LIB NAMES boost_system-mt
+		HINTS ${BOOST_LIB_DIR}
+		PATHS
+			/usr/lib
+			/usr/local/lib
+			/opt/local/lib
+		)
+
+	# Thread library
+	find_library(BOOST_THREAD_LIB NAMES boost_thread-mt
+		HINTS ${BOOST_LIB_DIR}
+		PATHS
+			/usr/lib
+			/usr/local/lib
+			/opt/local/lib
+		)
+
+	include(FindPackageHandleStandardArgs)
+	FIND_PACKAGE_HANDLE_STANDARD_ARGS(BOOST DEFAULT_MSG
+					BOOST_TIMER_LIB
+					BOOST_FILESYSTEM_LIB
+					BOOST_SYSTEM_LIB
+					BOOST_THREAD_LIB
+					BOOST_INC_DIR
+	)
+
+	# Include directories
+	include_directories(${BOOST_INC_DIR})
+
+	# Aggregate all the libraries in BOOST_LIBS
+	SET(BOOST_LIBS
+					${BOOST_FILESYSTEM_LIB}
+					${BOOST_SYSTEM_LIB}
+					${BOOST_THREAD_LIB})
+
+	# Link against the boost libraries
+	link_librarie(${BOOST_LIBS})
+
 	# Don't use old boost versions interfaces
 	ADD_DEFINITIONS(-DBOOST_FILESYSTEM_NO_DEPRECATED)
 endif ()
@@ -70,6 +119,7 @@ find_package(OpenGL)
 
 if (OPENGL_FOUND)
 	include_directories(SYSTEM ${OPENGL_INCLUDE_PATH})
+	link_libraries(${OPENGL_LIBRARY})
 endif()
 
 set(GLEW_ROOT                  "${GLEW_SEARCH_PATH}")
